@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <input type="text"id="task-input"placeholder="Enter a task"/>
+        <button id="add-btn">Add Task</button>
+        
+        <input type="text"id="search-input"placeholder="Search tasks"/>
+
+        <div class="filters">
+            <button id="all-btn">All</button>
+            <button id="pending-btn">Pending</button>
+            <button id="completed-btn">Completed</button>
+        </div>
+
+        <ul id="task-list">
+            <li class="task">
+                <div class="task-content">
+                <input type="checkbox">
+                <span>Learn JavaScript</span>
+                </div>
+                <button class="delete-btn">Delete</button>
+            </li>
+        </ul>
+
+        <div class="stats">
+            <p>Total: <span id="total-count">0</span></p>
+            <p>Completed: <span id="completed-count">0</span></p>
+            <p>Pending: <span id="pending-count">0</span></p>
+        </div>
+    </div>
+    
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>
