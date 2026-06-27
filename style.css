@@ -46,6 +46,9 @@ input:focus{
     outline:none;
     border-color:#2563eb;
 }
+input:hover{
+    border-color:#94a3b8;
+}
 
 #add-btn{
     width:100%;
@@ -89,6 +92,7 @@ input:focus{
     border:1px solid #e2e8f0;
     border-radius:0.5rem;
     margin-bottom:0.75rem;
+    transition: 0.3s;
 }
 .task:hover{
     border-color:#2563eb;
@@ -98,6 +102,13 @@ input:focus{
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex:1;
+    min-width:0;
+}
+.task-content span{
+    font-size: 1rem;
+    line-height:1;
+    overflow-wrap:break-word;
 }
 #task-list{
     list-style:none;
@@ -107,10 +118,12 @@ input:focus{
 .task input[type="checkbox"]{
     width: 18px;
     height: 18px;
+    margin:0;
     cursor: pointer;
 }
 
 .delete-btn{
+    min-width: 70px;
     border:none;
     background: #ef4444;
     color:white;
@@ -133,6 +146,7 @@ input:focus{
 .completed{
     text-decoration: line-through;
     opacity: 0.6;
+    color:#16a34a;
 }
 
 
