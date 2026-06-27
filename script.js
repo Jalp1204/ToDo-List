@@ -7,6 +7,7 @@ const pendingCount=document.querySelector("#pending-count");
 const allBtn=document.querySelector("#all-btn");
 const pendingBtn=document.querySelector("#pending-btn");
 const completedBtn=document.querySelector("#completed-btn");
+const searchInput=document.querySelector("#search-input");
 
 let tasks = [];
 
@@ -87,5 +88,15 @@ completedBtn.addEventListener("click",() => {
         return task.completed;
     });
     renderTasks(completedTasks);
+});
+
+searchInput.addEventListener("input",() => {
+    const searchText=searchInput.value.toLowerCase();
+
+    const filteredTasks=tasks.filter((task) => {
+    return task.text.toLowerCase().includes(searchText);
+    });
+
+    renderTasks(filteredTasks);
 });
 
