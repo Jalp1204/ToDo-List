@@ -11,9 +11,21 @@ const searchInput=document.querySelector("#search-input");
 
 let tasks = [];
 
+
+function saveTasks(){
+    localStorage.setItem("tasks",JSON.stringify(tasks));
+}
+function loadTasks(){
+    const storedTasks=localStorage.getItem("tasks");
+    if(storedTasks){
+        tasks=JSON.parse(storedTasks);
+        renderTasks(tasks);
+    }
+}
+
 function renderTasks(taskArray){
     taskList.innerHTML="";
-    taskArray.forEach((task,index) => {
+    taskArray.forEach((task) => {
         const li=document.createElement("li");
         li.classList.add("task");
         li.innerHTML=`
@@ -31,6 +43,7 @@ function renderTasks(taskArray){
         checkbox.checked=task.completed;
         checkbox.addEventListener("change", () => {
         task.completed=checkbox.checked;
+        saveTasks();
         renderTasks(tasks);
         });
         if(task.completed){
@@ -39,6 +52,7 @@ function renderTasks(taskArray){
         
         deleteBtn.addEventListener("click", () => {
         tasks=tasks.filter((t)=> t.id!=task.id);
+        saveTasks();
         renderTasks(tasks);
         });
         taskList.appendChild(li);
@@ -57,7 +71,7 @@ function updateStats(){
     pendingCount.innerText=tasks.length-completedTasks.length;
 }
 
-addBtn.addEventListener("click",() => {
+function addTask(){
     const taskText=taskInput.value.trim();
     if(taskText===""){
         return;
@@ -67,9 +81,11 @@ addBtn.addEventListener("click",() => {
         text:taskText,
         completed:false,
     });
+    saveTasks();
     renderTasks(tasks);
     taskInput.value="";
-});
+}
+addBtn.addEventListener("click",addTask);
 
 
 allBtn.addEventListener("click",() => {
@@ -99,4 +115,15 @@ searchInput.addEventListener("input",() => {
 
     renderTasks(filteredTasks);
 });
+
+taskInput.addEventListener("keydown",(event) => {
+    if(event.key==="Enter"){
+        addTask();
+    }
+});
+
+window.addEventListener("load",() => {
+    loadTasks();
+});
+
 
