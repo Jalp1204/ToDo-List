@@ -4,12 +4,15 @@ const taskList=document.querySelector("#task-list");
 const totalCount=document.querySelector("#total-count");
 const completedCount=document.querySelector("#completed-count");
 const pendingCount=document.querySelector("#pending-count");
+const allBtn=document.querySelector("#all-btn");
+const pendingBtn=document.querySelector("#pending-btn");
+const completedBtn=document.querySelector("#completed-btn");
 
 let tasks = [];
 
-function renderTasks(){
+function renderTasks(taskArray){
     taskList.innerHTML="";
-    tasks.forEach((task,index) => {
+    taskArray.forEach((task,index) => {
         const li=document.createElement("li");
         li.classList.add("task");
         li.innerHTML=`
@@ -19,6 +22,7 @@ function renderTasks(){
         </div>
         <button class="delete-btn">DELETE</button>
         `;
+
         const deleteBtn=li.querySelector(".delete-btn");
         const checkbox=li.querySelector("input[type='checkbox']");
         const taskText=li.querySelector("span");
@@ -26,15 +30,15 @@ function renderTasks(){
         checkbox.checked=task.completed;
         checkbox.addEventListener("change", () => {
         task.completed=checkbox.checked;
-        renderTasks();
+        renderTasks(tasks);
         });
         if(task.completed){
         taskText.classList.add("completed");
         }
         
         deleteBtn.addEventListener("click", () => {
-        tasks.splice(index, 1);
-        renderTasks();
+        tasks=tasks.filter((t)=> t.id!=task.id);
+        renderTasks(tasks);
         });
         taskList.appendChild(li);
     });
@@ -58,10 +62,30 @@ addBtn.addEventListener("click",() => {
         return;
     }
     tasks.push({
+        id:Date.now(),
         text:taskText,
         completed:false,
     });
-    renderTasks();
+    renderTasks(tasks);
     taskInput.value="";
+});
+
+
+allBtn.addEventListener("click",() => {
+    renderTasks(tasks);
+});
+
+pendingBtn.addEventListener("click",() => {
+    const pendingTasks=tasks.filter((task) => {
+        return !task.completed;
+    });
+    renderTasks(pendingTasks);
+});
+
+completedBtn.addEventListener("click",() => {
+    const completedTasks=tasks.filter((task) => {
+        return task.completed;
+    });
+    renderTasks(completedTasks);
 });
 
